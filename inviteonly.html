@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Invite Only — TEST</title>
+
+    <style>
+        .ReactModalPortal > div[style]{
+            background-color: rgba(2, 10, 0, 0.50) !important;
+        }
+
+        .ReactModal__Content {
+            font-family: Inter, system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif !important;
+            color: white;
+            border: 0 !important;
+            background: 0 !important;
+        }
+
+        .ReactModal__Content > .grid {
+            background-color: black;
+            padding: 16px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.8) !important;
+        }
+
+        .ReactModal__Content > button {
+            background-color: black;
+        }
+
+        .ReactModal__Content > div > div > div > div > .bg-black {
+            background-color: rgb(29,185,84) !important;
+            border-radius: 8px;
+        }
+
+         .ReactModal__Content > .float-right {
+            margin-top: 12px;
+        }
+
+/* Full-viewport backdrop that sits under the Beacons modal */
+        #inviteonly-bg{
+        position: fixed;
+        inset: 0;                 /* top/right/bottom/left: 0 */
+        background-size: cover;
+        background-position: center;
+        z-index: 0;               /* below the modal overlay (which is higher) */
+        display: grid;            /* easy centering */
+        place-items: center;      /* center child both axes */
+        pointer-events: none;     /* don't block clicks to the modal */
+        }
+
+        /* Centered message styling */
+        #inviteonly-bg > span{
+        color: #fff;
+        text-align: center;
+        max-width: 80ch;
+        line-height: 1.4;
+        text-shadow: 0 2px 12px rgba(0,0,0,.55);
+        padding: 0 16px;
+        }
+        @media (max-width: 600px){
+        #inviteonly-bg > span{ font-weight: 700; font-size: 18px; }
+        }
+
+        #inviteonly-bg > span {
+        opacity: 0;              /* start hidden */
+        transition: opacity .6s ease;
+        }
+        #inviteonly-bg > span.show {
+        opacity: 1;
+        }
+
+    </style>
+</head>
+<body class="test">
+
+  <script>
+    (function () {
+      var s=document.createElement("script");
+      var t=Math.floor(new Date().getTime()/120000);
+      s.type="module";
+      s.async=1;
+      s.src=`https://beacons.ai/embeds/emailForm.js?v=${t}&b=banhmicowboy&f=e8ec6542-96e1-41f0-8641-b706f55e276d`;
+      document.body.appendChild(s);
+    })();
+  </script>
+
+  <div id="e8ec6542-96e1-41f0-8641-b706f55e276d">
+    
+  </div>
+
+      <div id="inviteonly-bg" style="background-image:url(images/inviteonlybg.jpg)">
+        <span> You clicked outside of the pop up, you dummy! <br> It's okay, I still love you &lt;3 <br><br> Just refresh the page
+
+        </span>
+    </div>
+
+    <script>
+    window.addEventListener('load', () => {
+        document.querySelector('#inviteonly-bg > span')?.classList.add('show');
+    });
+    </script>
+</body>
+
+</html>
