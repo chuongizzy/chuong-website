@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dolby Atmos — chuong.exe</title>
+  <meta name="description" content="Dolby Atmos preview — chuong.exe" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+
+  <!-- ==== copied core styles from index so this page matches exactly ==== -->
+  <style>
+    :root{
+      --bg:#0b0f0c; --bg-alt:#0f1512; --fg:#E7F0E9; --muted:#A3B1A9;
+      --accent:#25C26E; --border:rgba(255,255,255,.08);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;background:var(--bg);color:var(--fg);font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+    a{color:inherit;text-decoration:none}
+    .shell{width:min(1100px,92%);margin:0 auto}
+    header{position:sticky;top:0;z-index:10;backdrop-filter:saturate(1.1) blur(8px);border-bottom:1px solid var(--border);background:linear-gradient(to bottom,rgba(11,15,12,.92),rgba(11,15,12,.35))}
+    header .inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .brand{font-weight:900;letter-spacing:.06em; font-size: 1.6rem;}
+    nav a{margin-left:18px;opacity:.9;position:relative}
+    nav a:hover{opacity:1}
+    @keyframes glitch-shift{0%{transform:translate(0,0)} 20%{transform:translate(1px,-1px)} 40%{transform:translate(-1px,1px)} 60%{transform:translate(1px,0)} 80%{transform:translate(-1px,0)} 100%{transform:translate(0,0)}}
+    nav a:hover{animation:glitch-shift .25s 2 linear}
+    nav a::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:2px;background:linear-gradient(90deg,transparent, var(--accent), transparent);transform:scaleX(0);transform-origin:center;transition:transform .18s ease}
+    nav a:hover::after{transform:scaleX(1)}
+    footer{border-top:1px solid var(--border);padding:20px 0;margin-top:40px;color:var(--muted)}
+    .footer-row{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+    footer .socials{display:flex;flex-wrap:wrap;gap:14px}
+    footer .socials a{opacity:.9}
+    footer .socials a:hover{opacity:1}
+    *{scrollbar-width:thin;scrollbar-color:var(--muted) transparent}
+    ::-webkit-scrollbar{width:10px;height:10px}
+    ::-webkit-scrollbar-track{background:transparent}
+    ::-webkit-scrollbar-thumb{background:linear-gradient(var(--muted), var(--accent));border-radius:10px;border:2px solid transparent;background-clip:padding-box}
+
+    /* ===== Dolby page layout ===== */
+    main{min-height:calc(100vh - 120px);display:flex;align-items:center}
+    .video-shell{width:min(1100px,92%);margin:0 auto;padding:40px 0}
+    .video-card{
+      background:#101713;border:1px solid var(--border);border-radius:16px;
+      padding:20px;display:flex;flex-direction:column;align-items:center;gap:12px
+    }
+    .sound-msg{
+      font-size:1rem;color:var(--muted);cursor:pointer;user-select:none
+    }
+    .video-wrap{
+      width:100%;max-width:960px;aspect-ratio:16 / 9;background:#000;border-radius:12px;overflow:hidden;border:1px solid var(--border);position:relative
+    }
+    video{width:100%;height:100%;display:block;outline:none}
+    .click-overlay{
+      position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+      pointer-events:auto;cursor:pointer;background:linear-gradient(to bottom, rgba(0,0,0,.15), rgba(0,0,0,.35));
+      opacity:0; transition:opacity .25s ease;
+    }
+    .click-overlay.show{opacity:1}
+    .badge{
+      padding:10px 14px;border-radius:12px;background:rgba(11,15,12,.8);
+      border:1px solid var(--border);color:var(--fg);backdrop-filter:saturate(1.1) blur(6px)
+    }
+    .toast{
+      position:fixed;left:50%;bottom:24px;transform:translateX(-50%);
+      background:#101713;border:1px solid var(--border);color:var(--fg);padding:10px 14px;border-radius:12px;opacity:0;transition:opacity .25s ease
+    }
+    .toast.show{opacity:1}
+
+    video { cursor: zoom-in; }
+    :fullscreen video, :-webkit-full-screen video { cursor: zoom-out; }
+    
+  </style>
+
+  <!-- (Optional) keep GA/Pixel consistent; uncomment if you want tracking here too -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BB1WZB4YS"></script>
+  <script>
+    window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}
+    gtag('js', new Date()); gtag('config','G-3BB1WZB4YS');
+  </script>
+  <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init','1484525092683430'); fbq('track','PageView');
+  </script>
+
+</head>
+<body>
+  <!-- Header exactly like index, but links point back to index sections -->
+  <header>
+    <div class="inner shell">
+      <div class="brand">chuong</div>
+      <nav>
+        <a href="index.html#music">Music</a>
+        <a href="index.html#bio">About</a>
+        <a href="index.html#tour">Tour</a>
+        <a href="index.html#newsletter">Newsletter</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="video-shell">
+      <div class="video-card">
+        <div id="soundMsg" class="sound-msg">click for sound</div>
+
+        <div class="video-wrap">
+          <video id="dolbyVideo" autoplay muted playsinline preload="auto" poster="images/hero.jpg">
+            <source src="/videos/dolbyatmos.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+
+          <!-- overlay ensures anywhere on the video is a valid click target -->
+          <div id="overlay" class="click-overlay show">
+            <div class="badge">click to unmute</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="shell footer-row">
+      <div>© <span id="year"></span> Chuong</div>
+      <div class="socials">
+        <a href="https://beacons.ai/banhmicowboy" target="_blank" rel="noopener">Beacons</a>
+        <a href="https://instagram.com/banhmicowboy" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://open.spotify.com/artist/7LZP4X4BlEg3kGdsBsge30" target="_blank" rel="noopener">Spotify</a>
+        <a href="https://tiktok.com/@banhmicowboy" target="_blank" rel="noopener">TikTok</a>
+        <a href="https://twitch.tv/banhmicowboy" target="_blank" rel="noopener">Twitch</a>
+        <a href="https://youtube.com/c/bahaycollective" target="_blank" rel="noopener">YouTube</a>
+      </div>
+    </div>
+  </footer>
+
+  <div id="toast" class="toast">🔊 sound on</div>
+
+  <script>
+    // year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const video   = document.getElementById('dolbyVideo');
+    const msg     = document.getElementById('soundMsg');
+    const overlay = document.getElementById('overlay');
+    const toast   = document.getElementById('toast');
+
+    // helper: show toast briefly
+    function blipToast(text){
+      if(text) toast.textContent = text;
+      toast.classList.add('show');
+      setTimeout(()=>toast.classList.remove('show'), 1400);
+    }
+
+    // On first user interaction, unmute + play (iOS/Chrome policies)
+    function enableSound(){
+      try {
+        video.muted = false;
+        video.volume = 1.0;
+        const p = video.play();
+        if (p && typeof p.then === 'function') {
+          p.then(()=> blipToast('🔊 sound on')).catch(()=> {
+            // if it still fails, keep overlay so they can try again
+          });
+        } else {
+          blipToast('🔊 sound on');
+        }
+        overlay.classList.remove('show');
+        msg.style.display = 'none';
+      } catch(e){
+        // keep overlay visible so they can retry
+      }
+    }
+
+    msg.addEventListener('click', enableSound, {passive:true});
+    overlay.addEventListener('click', enableSound, {passive:true});
+    // extra safety for mobile
+    overlay.addEventListener('touchstart', enableSound, {passive:true});
+
+    // If autoplay fails (some browsers block even muted rarely), try to start muted on load
+    window.addEventListener('load', () => {
+      const p = video.play();
+      if (p && typeof p.catch === 'function') {
+        p.catch(()=>{/* leave overlay visible */});
+      }
+    });
+      // --- Fullscreen helpers (with Safari/iOS fallbacks) ---
+    function isFullscreen() {
+        return document.fullscreenElement || document.webkitFullscreenElement || null;
+    }
+
+    function enterFullscreen(el) {
+        if (el.requestFullscreen) return el.requestFullscreen();
+        if (el.webkitRequestFullscreen) return el.webkitRequestFullscreen();      // older Safari
+        if (el.webkitEnterFullscreen) return el.webkitEnterFullscreen();          // iOS video-only
+    }
+
+    function exitFullscreen() {
+        if (document.exitFullscreen) return document.exitFullscreen();
+        if (document.webkitExitFullscreen) return document.webkitExitFullscreen(); // older Safari
+    }
+
+    function toggleFullscreen() {
+        // Prefer fullscreening the video itself
+        const el = video;
+        if (!isFullscreen()) {
+        enterFullscreen(el);
+        } else {
+        exitFullscreen();
+        }
+    }
+
+    // Double-click video (desktop) to toggle fullscreen
+    video.addEventListener('dblclick', toggleFullscreen);
+
+    // Optional: double-click the overlay too (if it’s still visible)
+    overlay.addEventListener('dblclick', toggleFullscreen);
+
+    // Press "f" to toggle fullscreen
+    document.addEventListener('keydown', (e) => {
+        if (e.key.toLowerCase() === 'f') toggleFullscreen();
+        if (e.key === 'Escape') { /* most browsers exit FS automatically */ }
+    });
+  </script>
+</body>
+</html>
